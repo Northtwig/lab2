@@ -1,3 +1,4 @@
+// New comment as an example
 package mobile.groupone.bookmanagergroupone;
 
 import android.support.design.widget.FloatingActionButton;
