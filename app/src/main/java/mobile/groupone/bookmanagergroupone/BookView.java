@@ -8,15 +8,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class BookView extends AppCompatActivity {
 public int position;
-TextView title;
-TextView author;
-TextView ISBN;
-TextView price;
-TextView course;
+EditText title;
+EditText author;
+EditText ISBN;
+EditText price;
+EditText course;
 
 public SimpleBookManager library;
 public Book book;
@@ -30,11 +31,11 @@ public Book book;
         Book book = library.getBook(position);
         Log.d("TAG", book.getTitle());
         Log.d("TAG", book.getAuthor());
-        title = (TextView) findViewById(R.id.input_title);
-        author = (TextView) findViewById(R.id.input_author);
-        ISBN = (TextView) findViewById(R.id.input_ISBN);
-        price = (TextView) findViewById(R.id.input_price);
-        course = (TextView) findViewById(R.id.input_course);
+        title = (EditText) findViewById(R.id.input_title);
+        author = (EditText) findViewById(R.id.input_author);
+        ISBN = (EditText) findViewById(R.id.input_ISBN);
+        price = (EditText) findViewById(R.id.input_price);
+        course = (EditText) findViewById(R.id.input_course);
 
         title.setText(book.getTitle());
         author.setText(book.getAuthor());
@@ -64,6 +65,13 @@ public Book book;
             book.setAuthor(author.getText().toString());
             book.setCourse(course.getText().toString());
             book.setIsbn(ISBN.getText().toString());
+            try {
+                book.setPrice(Integer.parseInt(price.getText().toString()));
+            }
+            catch ( NumberFormatException e )
+            {
+                book.setPrice(0);
+            }
             library.saveChanges();
             finish();
             return true;
