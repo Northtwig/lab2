@@ -15,4 +15,5 @@ public interface BookManager {
     public float getMeanPrice();
     public int getTotalCost();
     public void saveChanges();
+    public ArrayList loadChanges();
 }

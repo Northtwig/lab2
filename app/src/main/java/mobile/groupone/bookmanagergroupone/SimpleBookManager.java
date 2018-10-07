@@ -1,14 +1,18 @@
 package mobile.groupone.bookmanagergroupone;
 
 import android.util.Log;
-
+import com.google.gson.Gson;
 import java.util.ArrayList;
 
 public class SimpleBookManager implements BookManager {
 
     private ArrayList<Book> books;
+    private static SimpleBookManager INSTANCE = null;
+    String bookListJsonString;
 
-    public SimpleBookManager() {
+    // other instance variables can be here
+
+    private SimpleBookManager() {
         this.books = new ArrayList<Book>();
         this.createNonEmptyBook("J.K Rolling", "Harry Potter", 199, "12345", "Fiction for Engineers");
         this.createNonEmptyBook("Baudelaire", "Les Fleurs du Mal", 110, "12346", "French");
@@ -131,6 +135,25 @@ public class SimpleBookManager implements BookManager {
 
     @Override
     public void saveChanges() {
-
+        Gson gson = new Gson();
+        this.bookListJsonString = gson.toJson(books);
+        Log.d("TAG", bookListJsonString.toString());
     }
+
+    @Override
+    public ArrayList loadChanges() {
+        Gson gson = new Gson();
+        ArrayList bookListDtoArray = gson.fromJson(bookListJsonString, ArrayList.class);
+
+        return bookListDtoArray;
+    }
+
+    public static SimpleBookManager getBookManager() {
+        if (INSTANCE == null) {
+            INSTANCE = new SimpleBookManager();
+        }
+        return(INSTANCE);
+    }
+
+
 }
